@@ -247,6 +247,12 @@ sub process_metadata_and_proceed {
     croak "Must define subroutine for processing data rows: $!"
         unless ( defined($dataprocess) and reftype($dataprocess) eq 'CODE' );
 
+    $self->_process_metadata_engine($dataprocess);
+}
+
+sub _process_metadata_engine {
+    my $self = shift;
+    my $dataprocess = shift || undef;
     my $header_seen;
     my $exception;
     my @lines;
@@ -270,14 +276,13 @@ sub process_metadata_and_proceed {
                     last FILE;
                 }
             }
-            &{ $dataprocess }($lines[$i]);
+            &{ $dataprocess }($lines[$i])
+                if defined $dataprocess;
         }
     }
     untie @lines or croak "Unable to untie: $!";
     return ($self->{metaref}, $exception);
-}
-
-1;
+};
 
 =head2 C<process_metadata_only()>
 
@@ -301,35 +306,8 @@ Two-element list, same as for L<process_metadata_and_proceed>.
 =cut
 
 sub process_metadata_only {
-    my ($self) = @_;
-
-    my $header_seen;
-    my $exception;
-    my @lines;
-    tie @lines, 'Tie::File', $self->{file} or croak "Unable to tie: $!:";
-    FILE: for (my $i = 0 ; $i <= $#lines; $i++) {
-        next FILE if $lines[$i] =~ /^#/;
-        if (! $header_seen) {
-            if ($lines[$i] eq '') {
-                $header_seen++;
-            }
-            else {
-                next unless $lines[$i] =~ /^(.+?)$self->{header_split}(.*)$/;
-                my ($k, $v) = ($1, $2);
-                $self->{metaref}->{$k} = $v;
-            }
-        }
-        else {
-            foreach my $r ( @{ $self->{rules} } ) {
-                unless ( &{ $r->{rule} } ) {
-                    $exception = $r->{label};
-                    last FILE;
-                }
-            }
-        }
-    }
-    untie @lines or croak "Unable to untie: $!";
-    return ($self->{metaref}, $exception);
+    my $self = shift;
+    $self->_process_metadata_engine();
 }
 
 =head1 SUPPORT
