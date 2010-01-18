@@ -6,5 +6,8 @@ MANIFEST
 MANIFEST.SKIP
 README
 t/001_new.t
+t/002_process_metadata_and_proceed.t
+t/003_process_metadata_only.t
 t/amyfile.txt
+t/bmyfile.txt
 Todo

@@ -4,7 +4,7 @@ b=beta,charlie,delta
 c=epsilon	zeta	eta
 d=1234567890
 e=This is a string
-f=,
+#f=,
 
 some,body,loves,me
 I,wonder,wonder,who

@@ -1,6 +1,6 @@
 package Parse::File::Metadata;
 use strict;
-our $VERSION     = '0.01';
+our $VERSION = '0.01';
 use Carp;
 use Scalar::Util qw( reftype );
 use Tie::File;
@@ -264,7 +264,7 @@ sub process_metadata_and_proceed {
                     last FILE;
                 }
             }
-            $self->{dataprocess}($lines[$i]);
+            &{ $dataprocess }($lines[$i]);
         }
     }
     untie @lines or croak "Unable to untie: $!";
