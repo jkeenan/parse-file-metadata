@@ -15,12 +15,18 @@ Parse::File::Metadata - For plain-text files that contain both metadata and data
 
     $metaref = {};
     @rules = (
-        { label => q{'d' key must exist},
-            rule => sub { exists $metaref->{d}; } },
-        { label => q{'d' key must be non-negative integer},
-            rule => sub { $metaref->{d} =~ /^\d+$/; } },
-        { label => q{'f' key must exist},
-            rule => sub { exists $metaref->{f}; } },
+        {
+            rule => sub { exists $metaref->{d}; },
+            label => q{'d' key must exist},
+        },
+        {
+            rule => sub { $metaref->{d} =~ /^\d+$/; },
+            label => q{'d' key must be non-negative integer},
+        },
+        {
+            rule => sub { exists $metaref->{f}; },
+            label => q{'f' key must exist},
+        },
     );
 
     $self = Parse::File::Metadata->new( {

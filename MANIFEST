@@ -10,4 +10,6 @@ t/002_process_metadata_and_proceed.t
 t/003_process_metadata_only.t
 t/amyfile.txt
 t/bmyfile.txt
+t/cmyfile.txt
+t/dmyfile.txt
 Todo
