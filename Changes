@@ -3,4 +3,7 @@ Revision history for Perl module Parse::File::Metadata
 0.01 Sun Jan 17 14:17:07 2010
     - original version; created by ExtUtils::ModuleMaker 0.51
 
+0.02 Mon Jan 18 21:01:01 2010
+    - Change return value of two methods so that $exception returns
+      reference to array holding labels of all rules where metadata failed.
 
