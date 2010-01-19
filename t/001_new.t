@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Parse::File::Metadata;
-use Test::More qw(no_plan); # tests =>  6;
+use Test::More tests =>  5;
 
 my ($file, $header_split, $metaref, @rules);
 my $self;

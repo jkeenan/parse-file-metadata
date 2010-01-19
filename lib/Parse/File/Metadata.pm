@@ -234,7 +234,8 @@ Hash of metadata found in file's header.
 
 =item 2
 
-String holding the C<label> for the first rule on which the metadata fails.
+Reference to an array holding lists of C<label>s for rules on which the
+metadata fails.
 
 =back
 
@@ -254,7 +255,7 @@ sub _process_metadata_engine {
     my $self = shift;
     my $dataprocess = shift || undef;
     my $header_seen;
-    my $exception;
+    my $exception = [];
     my @lines;
     tie @lines, 'Tie::File', $self->{file} or croak "Unable to tie: $!:";
     FILE: for (my $i = 0 ; $i <= $#lines; $i++) {
@@ -272,10 +273,10 @@ sub _process_metadata_engine {
         else {
             foreach my $r ( @{ $self->{rules} } ) {
                 unless ( &{ $r->{rule} } ) {
-                    $exception = $r->{label};
-                    last FILE;
+                    push @{$exception}, $r->{label};
                 }
             }
+            last FILE if scalar @{$exception};
             &{ $dataprocess }($lines[$i])
                 if defined $dataprocess;
         }

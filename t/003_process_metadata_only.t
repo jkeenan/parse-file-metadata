@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Parse::File::Metadata;
-use Test::More qw(no_plan); # tests =>  6;
+use Test::More tests => 11;
 
 my ($file, $header_split, $metaref, @rules);
 my $self;
@@ -41,7 +41,7 @@ $expected_metadata = {
 };
 is_deeply( $metadata_out, $expected_metadata,
     "Got expected metadata" );
-ok( ! $exception, "No exception:  all metadata criteria met" );
+ok( ! scalar @{$exception}, "No exception:  all metadata criteria met" );
 
 # 2
 $file = 't/bmyfile.txt';
@@ -74,8 +74,8 @@ $expected_metadata = {
 };
 is_deeply( $metadata_out, $expected_metadata,
     "Got expected metadata" );
-ok( $exception, "Metadata criteria not met" );
-is( $exception, q{'f' key must exist},
+ok( $exception->[0], "Metadata criteria not met" );
+is( $exception->[0], q{'f' key must exist},
     "Got expected metadata criterion label" );
 
 # 3
@@ -110,6 +110,6 @@ $expected_metadata = {
 };
 is_deeply( $metadata_out, $expected_metadata,
     "Got expected metadata" );
-ok( ! $exception, "No exception:  all metadata criteria met" );
+ok( ! scalar @{$exception}, "No exception:  all metadata criteria met" );
 
 pass("Completed all tests in $0");
