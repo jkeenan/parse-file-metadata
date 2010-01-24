@@ -30,7 +30,9 @@ $self = Parse::File::Metadata->new( {
 } );
 isa_ok( $self, 'Parse::File::Metadata' );
 
-($metadata_out, $exception) = $self->process_metadata_only();
+$self->process_metadata_only();
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},
@@ -64,7 +66,9 @@ $self = Parse::File::Metadata->new( {
 } );
 isa_ok( $self, 'Parse::File::Metadata' );
 
-($metadata_out, $exception) = $self->process_metadata_only();
+$self->process_metadata_only();
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},
@@ -99,7 +103,9 @@ $self = Parse::File::Metadata->new( {
 } );
 isa_ok( $self, 'Parse::File::Metadata' );
 
-($metadata_out, $exception) = $self->process_metadata_only();
+$self->process_metadata_only();
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},

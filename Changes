@@ -7,3 +7,8 @@ Revision history for Perl module Parse::File::Metadata
     - Change return value of two methods so that $exception returns
       reference to array holding labels of all rules where metadata failed.
 
+0.03 Sat Jan 23 20:23:30 2010
+    - Create methods get_metadata() and get_exception() to explicitly
+      get data out of object.  process_metadata_and_proceed() and
+      process_metadata_only() no longer provide return values.
+

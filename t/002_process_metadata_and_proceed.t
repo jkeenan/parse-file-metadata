@@ -33,7 +33,9 @@ isa_ok( $self, 'Parse::File::Metadata' );
 
 $dataprocess = sub { my @fields = split /,/, $_[0], -1; };
 
-($metadata_out, $exception) = $self->process_metadata_and_proceed( $dataprocess );
+$self->process_metadata_and_proceed( $dataprocess );
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},
@@ -69,7 +71,9 @@ isa_ok( $self, 'Parse::File::Metadata' );
 
 $dataprocess = sub { my @fields = split /,/, $_[0], -1; };
 
-($metadata_out, $exception) = $self->process_metadata_and_proceed( $dataprocess );
+$self->process_metadata_and_proceed( $dataprocess );
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},
@@ -106,15 +110,13 @@ isa_ok( $self, 'Parse::File::Metadata' );
 
 $dataprocess = undef;
 eval {
-    ($metadata_out, $exception) =
-        $self->process_metadata_and_proceed( $dataprocess );
+    $self->process_metadata_and_proceed( $dataprocess );
 };
 like( $@, qr/^Must define subroutine for processing data rows/,
     "Got expected error:  process_metadata_and_proceed() argument undefined" );
 
 eval {
-    ($metadata_out, $exception) =
-        $self->process_metadata_and_proceed( [ qw( a b c ) ] );
+    $self->process_metadata_and_proceed( [ qw( a b c ) ] );
 };
 like( $@, qr/^Must define subroutine for processing data rows/,
     "Got expected error:  process_metadata_and_proceed() wrong argument type" );
@@ -142,7 +144,9 @@ isa_ok( $self, 'Parse::File::Metadata' );
 
 $dataprocess = sub { my @fields = split /,/, $_[0], -1; };
 
-($metadata_out, $exception) = $self->process_metadata_and_proceed( $dataprocess );
+$self->process_metadata_and_proceed( $dataprocess );
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},
@@ -178,7 +182,9 @@ isa_ok( $self, 'Parse::File::Metadata' );
 
 $dataprocess = sub { my @fields = split /,/, $_[0], -1; };
 
-($metadata_out, $exception) = $self->process_metadata_and_proceed( $dataprocess );
+$self->process_metadata_and_proceed( $dataprocess );
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},
@@ -214,7 +220,9 @@ isa_ok( $self, 'Parse::File::Metadata' );
 
 $dataprocess = sub { my @fields = split /,/, $_[0], -1; };
 
-($metadata_out, $exception) = $self->process_metadata_and_proceed( $dataprocess );
+$self->process_metadata_and_proceed( $dataprocess );
+$metadata_out   = $self->get_metadata();
+$exception      = $self->get_exception();
 $expected_metadata = {
     a => q{alpha},
     b => q{beta,charlie,delta},

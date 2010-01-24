@@ -1,6 +1,6 @@
 package Parse::File::Metadata;
 use strict;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use Carp;
 use Scalar::Util qw( reftype );
 use Tie::File;
@@ -38,10 +38,13 @@ Parse::File::Metadata - For plain-text files that contain both metadata and data
 
     $dataprocess = sub { my @fields = split /,/, $_[0], -1; say "@fields"; };
 
-    ($metadata_out, $exception) =
-        $self->process_metadata_and_proceed( $dataprocess );
+    $self->process_metadata_and_proceed( $dataprocess );
 
-    ($metadata_out, $exception) = $self->process_metadata_only();
+    $self->process_metadata_only();
+
+    $metadata_out = $self->get_metadata();
+
+    $exception = $self->get_exception();
 
 =head1 DESCRIPTION
 
@@ -224,20 +227,8 @@ parse the data rows with the subroutine specified as argument to this method.
 
 =item * Return Values
 
-Two-element list.
-
-=over 4
-
-=item 1
-
-Hash of metadata found in file's header.
-
-=item 2
-
-Reference to an array holding lists of C<label>s for rules on which the
-metadata fails.
-
-=back
+None.  Use C<get_metadata()> and C<get_exception()> methods to obtain that
+data.
 
 =back
 
@@ -282,7 +273,7 @@ sub _process_metadata_engine {
         }
     }
     untie @lines or croak "Unable to untie: $!";
-    return ($self->{metaref}, $exception);
+    $self->{exception} = $exception;
 };
 
 =head2 C<process_metadata_only()>
@@ -300,7 +291,7 @@ beginning any processing of the data records.
 
 =item * Return Values
 
-Two-element list, same as for L<process_metadata_and_proceed>.
+None.
 
 =back
 
@@ -309,6 +300,61 @@ Two-element list, same as for L<process_metadata_and_proceed>.
 sub process_metadata_only {
     my $self = shift;
     $self->_process_metadata_engine();
+}
+
+=head2 C<get_metadata()>
+
+=over 4
+
+=item * Purpose
+
+Access metadata in file's header section.
+
+=item * Arguments
+
+    $metadata_out = $self->get_metadata()
+
+None.
+
+=item * Return Values
+
+Hash of metadata found in file's header.
+
+=back
+
+=cut
+
+sub get_metadata {
+    my $self = shift;
+    return $self->{metaref};
+}
+
+=head2 C<get_exception()>
+
+=over 4
+
+=item * Purpose
+
+Access reasons, if any, why file failed to meet specified criteria.
+
+=item * Arguments
+
+    $exception = $self->get_exception()
+
+None.
+
+=item * Return Values
+
+Reference to an array holding lists of C<label>s for rules on which the
+metadata fails.
+
+=back
+
+=cut
+
+sub get_exception {
+    my $self = shift;
+    return $self->{exception};
 }
 
 =head1 SUPPORT
