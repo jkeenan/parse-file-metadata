@@ -1,6 +1,7 @@
 #perl
 use strict;
 use warnings;
+use File::Spec;
 use Parse::File::Metadata;
 use Test::More tests => 22;
 
@@ -11,7 +12,7 @@ my $expected_metadata;
 my %exceptions_seen;
 
 # 1
-$file = 't/amyfile.txt';
+$file = File::Spec->catfile( 't', 'amyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (
@@ -49,7 +50,7 @@ is_deeply( $metadata_out, $expected_metadata,
 ok( ! scalar @{$exception}, "No exception:  all metadata criteria met" );
 
 # 2
-$file = 't/bmyfile.txt';
+$file = File::Spec->catfile( 't', 'bmyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (
@@ -88,7 +89,7 @@ is( $exception->[0], q{'f' key must exist},
     "Got expected metadata criterion label" );
 
 # 3
-$file = 't/amyfile.txt';
+$file = File::Spec->catfile( 't', 'amyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (
@@ -122,7 +123,7 @@ like( $@, qr/^Must define subroutine for processing data rows/,
     "Got expected error:  process_metadata_and_proceed() wrong argument type" );
 
 # 4
-$file = 't/cmyfile.txt';
+$file = File::Spec->catfile( 't', 'cmyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (
@@ -160,7 +161,7 @@ is_deeply( $metadata_out, $expected_metadata,
 ok( ! scalar @{$exception}, "No exception:  all metadata criteria met" );
 
 # 5
-$file = 't/dmyfile.txt';
+$file = File::Spec->catfile( 't', 'dmyfile.txt' );
 $header_split = '\s*=\s*';
 $metaref = {};
 @rules = (
@@ -198,7 +199,7 @@ is_deeply( $metadata_out, $expected_metadata,
 ok( ! scalar @{$exception}, "No exception:  all metadata criteria met" );
 
 # 6
-$file = 't/emyfile.txt';
+$file = File::Spec->catfile( 't', 'emyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (

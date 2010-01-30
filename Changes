@@ -12,3 +12,6 @@ Revision history for Perl module Parse::File::Metadata
       get data out of object.  process_metadata_and_proceed() and
       process_metadata_only() no longer provide return values.
 
+0.04 Fri Jan 29 21:36:00 2010
+    - In tests, use 'File::Spec->catfile()' to create paths for files used
+      in testing (in hope that we get better CPANtesters results on Win32).

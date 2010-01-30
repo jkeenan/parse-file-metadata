@@ -1,6 +1,7 @@
 #perl
 use strict;
 use warnings;
+use File::Spec;
 use Parse::File::Metadata;
 use Test::More tests => 11;
 
@@ -10,7 +11,7 @@ my ($dataprocess, $metadata_out, $exception);
 my $expected_metadata;
 
 # 1
-$file = 't/amyfile.txt';
+$file = File::Spec->catfile( 't', 'amyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (
@@ -46,7 +47,7 @@ is_deeply( $metadata_out, $expected_metadata,
 ok( ! scalar @{$exception}, "No exception:  all metadata criteria met" );
 
 # 2
-$file = 't/bmyfile.txt';
+$file = File::Spec->catfile( 't', 'bmyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (
@@ -83,7 +84,7 @@ is( $exception->[0], q{'f' key must exist},
     "Got expected metadata criterion label" );
 
 # 3
-$file = 't/cmyfile.txt';
+$file = File::Spec->catfile( 't', 'cmyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (

@@ -9,6 +9,7 @@ WriteMakefile(
     PREREQ_PM    => {
                      'Test::Simple' => 0.44,
                      'Carp' => 0,
+                     'File::Spec' => 0,
                      'Scalar::Util' => 0, # changeme
                      'Tie::File' => 0.92,
                     },
