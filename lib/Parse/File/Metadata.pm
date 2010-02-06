@@ -84,8 +84,8 @@ or may not be used in the parsing of the data.
 
 =head2 Example
 
-Below is a plain-text file in which the header consists of key-value
-pairs delimited by C<=> signs.  The key is the to the left of the first delimiter.
+Below is a plain-text file in which the header consists of key-value pairs
+delimited by C<=> signs.  The key is the to the left of the first delimiter.
 Everything to the right is part of the value (including any additional
 delimiter characters).
 
@@ -172,9 +172,9 @@ Reference to an array of hashrefs.  Each such hashref has two elements:
 
 =item * C<rule>
 
-Reference to a subroutine describing a criterion which the header must pass before parsing of the body
-begins.  The subroutine returns a true value when the criterion is met
-and an undefined value when the criterion is not met.
+Reference to a subroutine describing a criterion which the header must pass
+before parsing of the body begins.  The subroutine returns a true value when
+the criterion is met and an undefined value when the criterion is not met.
 
 =item * C<label>
 
