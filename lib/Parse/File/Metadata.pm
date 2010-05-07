@@ -1,6 +1,6 @@
 package Parse::File::Metadata;
 use strict;
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 use Carp;
 use Scalar::Util qw( reftype );
 use Tie::File;
@@ -222,8 +222,7 @@ parse the data rows with the subroutine specified as argument to this method.
 
     $dataprocess = sub { my @fields = split /,/, $_[0], -1; say "@fields"; };
 
-    ($metadata_out, $exception) =
-        $self->process_metadata_and_proceed( $dataprocess );
+    $self->process_metadata_and_proceed( $dataprocess );
 
 =item * Return Values
 
@@ -251,6 +250,7 @@ sub _process_metadata_engine {
     tie @lines, 'Tie::File', $self->{file} or croak "Unable to tie: $!:";
     FILE: for (my $i = 0 ; $i <= $#lines; $i++) {
         next FILE if $lines[$i] =~ /^#/;
+        $lines[$i] =~ s/[\r\n]+$//g;
         if (! $header_seen) {
             if ($lines[$i] eq '') {
                 $header_seen++;
@@ -287,7 +287,7 @@ beginning any processing of the data records.
 
 =item * Arguments
 
-    ($metadata_out, $exception) = $self->process_metadata_only();
+    $self->process_metadata_only();
 
 =item * Return Values
 

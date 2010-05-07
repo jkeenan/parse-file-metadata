@@ -15,3 +15,6 @@ Revision history for Perl module Parse::File::Metadata
 0.04 Fri Jan 29 21:36:00 2010
     - In tests, use 'File::Spec->catfile()' to create paths for files used
       in testing (in hope that we get better CPANtesters results on Win32).
+
+0.05 Thu May  6 21:00:19 EDT 2010
+    - Account for DOS line endings.
