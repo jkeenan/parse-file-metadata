@@ -1,9 +1,8 @@
 package Parse::File::Metadata;
 use strict;
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 use Carp;
 use Scalar::Util qw( reftype );
-use Tie::File;
 
 =head1 NAME
 
@@ -246,17 +245,17 @@ sub _process_metadata_engine {
     my $dataprocess = shift || undef;
     my $header_seen;
     my $exception = [];
-    my @lines;
-    tie @lines, 'Tie::File', $self->{file} or croak "Unable to tie: $!:";
-    FILE: for (my $i = 0 ; $i <= $#lines; $i++) {
-        next FILE if $lines[$i] =~ /^#/;
-        $lines[$i] =~ s/[\r\n]+$//g;
+    open my $FILE, '<', $self->{file}
+        or croak "Unable to open file for reading";
+    THISFILE: while (my $l = <$FILE>) {
+        next if $l =~ /^#/;
+        $l =~ s/[\r\n]+$//g;
         if (! $header_seen) {
-            if ($lines[$i] eq '') {
+            if ($l eq '') {
                 $header_seen++;
             }
             else {
-                next unless $lines[$i] =~ /^(.+?)$self->{header_split}(.*)$/;
+                next unless $l =~ /^(.+?)$self->{header_split}(.*)$/;
                 my ($k, $v) = ($1, $2);
                 $self->{metaref}->{$k} = $v;
             }
@@ -267,12 +266,12 @@ sub _process_metadata_engine {
                     push @{$exception}, $r->{label};
                 }
             }
-            last FILE if scalar @{$exception};
-            &{ $dataprocess }($lines[$i])
+            last THISFILE if scalar @{$exception};
+            &{ $dataprocess }($l)
                 if defined $dataprocess;
         }
     }
-    untie @lines or croak "Unable to untie: $!";
+    close $FILE or croak "Unable to close";
     $self->{exception} = $exception;
 };
 

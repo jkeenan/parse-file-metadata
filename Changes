@@ -18,3 +18,7 @@ Revision history for Perl module Parse::File::Metadata
 
 0.05 Thu May  6 21:00:19 EDT 2010
     - Account for DOS line endings.
+
+0.06 Fri May  7 07:11:16 EDT 2010
+    - Eliminate use of Tie::File; just do regular 'open'.  Substitute test
+      file.

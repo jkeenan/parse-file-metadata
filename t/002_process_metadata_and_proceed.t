@@ -242,7 +242,7 @@ ok( exists $exceptions_seen{q|'f' key must exist|},
 
 # 7
 # DOS line endings
-$file = File::Spec->catfile( 't', 'wmyfile.txt' );
+$file = File::Spec->catfile( 't', 'xmyfile.txt' );
 $header_split = '=';
 $metaref = {};
 @rules = (
