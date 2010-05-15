@@ -1,6 +1,6 @@
 package Parse::File::Metadata;
 use strict;
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 use Carp;
 use Scalar::Util qw( reftype );
 
@@ -35,7 +35,7 @@ Parse::File::Metadata - For plain-text files that contain both metadata and data
         rules           => \@rules,
     } );
 
-    $dataprocess = sub { my @fields = split /,/, $_[0], -1; say "@fields"; };
+    $dataprocess = sub { my @fields = split /,/, $_[0], -1; print "@fields\n"; };
 
     $self->process_metadata_and_proceed( $dataprocess );
 
@@ -219,7 +219,7 @@ parse the data rows with the subroutine specified as argument to this method.
 
 =item * Arguments
 
-    $dataprocess = sub { my @fields = split /,/, $_[0], -1; say "@fields"; };
+    $dataprocess = sub { my @fields = split /,/, $_[0], -1; print "@fields\n"; };
 
     $self->process_metadata_and_proceed( $dataprocess );
 
