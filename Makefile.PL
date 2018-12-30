@@ -5,6 +5,7 @@ WriteMakefile(
     NAME         => 'Parse::File::Metadata',
     VERSION_FROM => 'lib/Parse/File/Metadata.pm', # finds \$VERSION
     AUTHOR       => 'James E Keenan (jkeenan@cpan.org)',
+    LICENSE      => 'perl_5',
     ABSTRACT     => 'For plain-text files that contain metadata (in key-value pairs) and data records, parse metadata first before proceeding',
     PREREQ_PM    => {
                      'Test::Simple' => 0.44,
